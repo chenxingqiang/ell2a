@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-content_root="./"
+      x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }"
+      x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+      class="scroll-smooth"
+      :class="{'dark': darkMode === 'dark' || (darkMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}"
+>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction | ell2a  documentation</title>
+    <meta property="og:title" content="Introduction | ell2a  documentation" />
+    <meta name="twitter:title" content="Introduction | ell2a  documentation" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5cc6ec80" />
+      <link rel="stylesheet" type="text/css" href="_static/theme.css?v=ecdfb4fc" />
+      <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css?v=a0a71c94" />
+      <link rel="icon" href="_static/favicon.ico" />
+        <link rel="search" title="Search" href="search.html" />
+        <link rel="index" title="Index" href="genindex.html" />
+          <link rel="next" title="Installation" href="installation.html" />
+
+    <script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script> 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-220ZB10X27"></script>
+<script>
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+
+        gtag('config', 'G-220ZB10X27')
+    }
+</script>
+
+<style>
+    .rounded-image {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    function invertImage(dark) {
+        var images = document.querySelectorAll('.invertible-image img')
+        var htmlElement = document.documentElement
+        images.forEach(function (image) {
+            if (!dark) {
+                image.style.filter = 'invert(100%) hue-rotate(160deg)'
+            } else {
+                image.style.filter = 'none'
+            }
+        })
+    }
+
+    // Run when the 'dark' class is added or removed from the <html> element
+    const htmlElement = document.documentElement
+
+    // Use MutationObserver to detect changes in the class attribute
+    const observer = new MutationObserver((mutations) => {
+        console.log(document.documentElement.classList)
+        mutations.forEach((mutation) => {
+            invertImage(document.documentElement.classList.contains('dark'))
+        })
+    })
+
+    observer.observe(htmlElement, { attributes: true, attributeFilter: ['class'] })
+</script>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:url" content="https://docs.agentbase.space/" />
+<meta
+    property="og:description"
+    content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs."
+/>
+<meta property="og:image" content="https://docs.agentbase.space/_static/og2.png" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta
+    property="twitter:description"
+    content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs."
+/>
+
+<!-- Additional SEO tags -->
+<meta
+    name="description"
+    content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs."
+/>
+<meta name="keywords" content="ell2a, language model programming, prompt engineering, LLM, AI, machine learning, GPT" />
+<meta name="author" content="Xingqiang Chen" />
+
+
+</head>
+<body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+    <div x-cloak x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div><div id="page" class="relative flex flex-col min-h-screen"><a href="#content" class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100">
+      Skip to content
+    </a><header
+  class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+    <div class="hidden mr-4 md:flex">
+<style>
+    :root {
+        --color-1: 0 100% 63%;
+        --color-2: 270 100% 63%;
+        --color-3: 210 100% 63%;
+        --color-4: 195 100% 63%;
+        --color-5: 90 100% 63%;
+    }
+
+    @keyframes rainbow {
+        0% {
+            background-position: 0%;
+        }
+        100% {
+            background-position: 200%;
+        }
+    }
+
+    .github-star-btn {
+        height: 2.2rem;
+        padding: 0.5rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        border: 0;
+        position: relative;
+        background-size: 200%;
+        background-clip: padding-box, border-box, border-box;
+        background-origin: border-box;
+        border: calc(0.08 * 1rem) solid transparent;
+        color: #fff;
+        background-image: linear-gradient(#121213, #121213),
+            linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),
+            linear-gradient(
+                90deg,
+                hsl(var(--color-1)),
+                hsl(var(--color-5)),
+                hsl(var(--color-3)),
+                hsl(var(--color-4)),
+                hsl(var(--color-2))
+            );
+        animation: rainbow 2s infinite linear;
+    }
+
+    .github-star-btn::before {
+        content: '';
+        position: absolute;
+        bottom: -20%;
+        left: 50%;
+        z-index: 0;
+        height: 20%;
+        width: 60%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+            90deg,
+            hsl(var(--color-1)),
+            hsl(var(--color-5)),
+            hsl(var(--color-3)),
+            hsl(var(--color-4)),
+            hsl(var(--color-2))
+        );
+        background-size: 200%;
+        filter: blur(calc(0.8 * 1rem));
+        animation: rainbow 2s infinite linear;
+    }
+
+    .dark .github-star-btn {
+        color: #030303;
+        background-image: linear-gradient(#fff, #fff),
+            linear-gradient(#fff 50%, rgba(255, 255, 255, 0.6) 80%, rgba(0, 0, 0, 0)),
+            linear-gradient(
+                90deg,
+                hsl(var(--color-1)),
+                hsl(var(--color-5)),
+                hsl(var(--color-3)),
+                hsl(var(--color-4)),
+                hsl(var(--color-2))
+            );
+    }
+
+    nav a {
+        white-space: nowrap;
+    }
+
+    .twin-btn-container {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-direction: row-reverse;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .twin-btn-container {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .github-star-btn {
+            font-size: 12px;
+            padding: 0.4rem 0.8rem;
+        }
+    }
+</style>
+
+<a href="#" class="flex items-center mr-6">
+    <img
+        width="120"
+        height="24"
+        class="mr-2 hidden dark:block"
+        src="_static/ell2a-wide-dark.png"
+        alt="Logo"
+        style="min-width: 120px; max-width: 120px"
+    />
+    <img
+        width="120"
+        height="24"
+        class="mr-2 dark:hidden"
+        src="_static/ell2a-wide-light.png"
+        alt="Logo"
+        style="min-width: 120px; max-width: 120px"
+    /></a>
+<nav class="flex items-center space-x-6 text-sm font-medium">
+        <a href="#" class="transition-colors hover:text-foreground/80 text-foreground">Docs</a>
+        <a href="reference/index.html" class="transition-colors hover:text-foreground/80 text-foreground">API Reference</a>
+        <a href="https://jobs.agentbase.space" class="transition-colors hover:text-foreground/80 text-foreground/60" rel="noopener nofollow">AI Jobs Board</a>
+      </nav></div><button
+      class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
+      type="button" @click="showSidebar = true">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" aria-hidden="true"
+        fill="currentColor">
+        <path
+          d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z" />
+      </svg>
+      <span class="sr-only">Toggle navigation menu</span>
+    </button>
+<div class="flex flex-wrap items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+    <div class="twin-btn-container">
+        <div class="github-star-btn-container md:w-auto mb-2 md:mb-0">
+            <a
+                href="https://github.com/chenxingqiang/ell2a"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="github-star-btn whitespace-nowrap"
+            >
+                <svg
+                    class="w-5 h-5 mr-2 hidden sm:inline-block"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                <span class="font-medium">Star on GitHub</span>
+                <svg
+                    class="star-icon w-4 h-4 ml-2"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" />
+                    </path>
+                </svg>
+                <span class="ml-2 star-count" data-stars="0" style="min-width: 3ch; text-align: center">0</span>
+            </a>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const starBtn = document.querySelector('.github-star-btn')
+                const starCount = starBtn.querySelector('.star-count')
+
+                fetch('https://api.github.com/repos/chenxingqiang/ell2a')
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const stars = data.stargazers_count
+                        animateValue(starCount, 0, stars, 1500)
+                    })
+                    .catch((error) => console.error('Error fetching GitHub stars:', error))
+            })
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1)
+                    obj.textContent = Math.floor(progress * (end - start) + start)
+                    obj.setAttribute('data-stars', obj.textContent)
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step)
+                    }
+                }
+                window.requestAnimationFrame(step)
+            }
+        </script>
+
+        <div class="searchbox-container w-full md:w-auto md:flex-none"><form id="searchbox"
+      action="search.html"
+      method="get"
+      class="relative flex items-center group"
+      @keydown.k.window.meta="$refs.search.focus()">
+  <input x-ref="search"
+          name="q"
+          id="search-input"
+          type="search"
+          aria-label="Search the docs"
+          placeholder="Search ..."
+          class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" />
+  <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+    <span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.querySelector('.searchbox-container input')
+                const starBtnContainer = document.querySelector('.github-star-btn-container')
+
+                if (searchInput && starBtnContainer) {
+                    const isMobile = window.innerWidth < 768 // Adjust this breakpoint as needed
+
+                    if (isMobile) {
+                        searchInput.addEventListener('focus', function () {
+                            starBtnContainer.style.display = 'none'
+                        })
+
+                        searchInput.addEventListener('blur', function () {
+                            starBtnContainer.style.display = 'block'
+                        })
+                    }
+                }
+            })
+        </script>
+    </div>
+    <nav class="flex items-center space-x-1 mt-2 md:mt-0">
+        <a href="https://discord.gg/vWntgU52Xb" title="Visit Discord" rel="noopener nofollow">
+            <div
+                class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md disabled:opacity-50 disabled:pointer-events-none hover:bg-accent hover:text-accent-foreground h-9 w-9"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="18" fill="currentColor"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M524.5 69.8a1.5 1.5 0 0 0 -.8-.7A485.1 485.1 0 0 0 404.1 32a1.8 1.8 0 0 0 -1.9 .9 337.5 337.5 0 0 0 -14.9 30.6 447.8 447.8 0 0 0 -134.4 0 309.5 309.5 0 0 0 -15.1-30.6 1.9 1.9 0 0 0 -1.9-.9A483.7 483.7 0 0 0 116.1 69.1a1.7 1.7 0 0 0 -.8 .7C39.1 183.7 18.2 294.7 28.4 404.4a2 2 0 0 0 .8 1.4A487.7 487.7 0 0 0 176 479.9a1.9 1.9 0 0 0 2.1-.7A348.2 348.2 0 0 0 208.1 430.4a1.9 1.9 0 0 0 -1-2.6 321.2 321.2 0 0 1 -45.9-21.9 1.9 1.9 0 0 1 -.2-3.1c3.1-2.3 6.2-4.7 9.1-7.1a1.8 1.8 0 0 1 1.9-.3c96.2 43.9 200.4 43.9 295.5 0a1.8 1.8 0 0 1 1.9 .2c2.9 2.4 6 4.9 9.1 7.2a1.9 1.9 0 0 1 -.2 3.1 301.4 301.4 0 0 1 -45.9 21.8 1.9 1.9 0 0 0 -1 2.6 391.1 391.1 0 0 0 30 48.8 1.9 1.9 0 0 0 2.1 .7A486 486 0 0 0 610.7 405.7a1.9 1.9 0 0 0 .8-1.4C623.7 277.6 590.9 167.5 524.5 69.8zM222.5 337.6c-29 0-52.8-26.6-52.8-59.2S193.1 219.1 222.5 219.1c29.7 0 53.3 26.8 52.8 59.2C275.3 311 251.9 337.6 222.5 337.6zm195.4 0c-29 0-52.8-26.6-52.8-59.2S388.4 219.1 417.9 219.1c29.7 0 53.3 26.8 52.8 59.2C470.7 311 447.5 337.6 417.9 337.6z"/></svg>
+            </div>
+        </a>
+        
+        <button
+            @click="darkMode = darkMode === 'light' ? 'dark' : 'light'"
+            class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9"
+            type="button"
+            aria-label="Color theme switcher"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+                viewBox="0 96 960 960"
+                fill="currentColor"
+                class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0"
+            >
+                <path
+                    d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"
+                />
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+                viewBox="0 96 960 960"
+                fill="currentColor"
+                class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100"
+            >
+                <path
+                    d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"
+                />
+            </svg>
+        </button>
+    </nav>
+</div>
+  </div>
+</header>
+
+    <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside id="left-sidebar"
+  class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
+  :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
+
+    <a href="#" class="!justify-start text-sm md:!hidden bg-background">
+        <img width="16" height="16" class="mr-2 hidden dark:block" src="_static/ell2a-wide-dark.png" alt="Logo" />
+        <img width="16" height="16" class="mr-2 dark:hidden" src="_static/ell2a-wide-light.png" alt="Logo" /><span class="font-bold text-clip whitespace-nowrap">ell2a  documentation</span>
+    </a>
+
+    <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+      <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
+  <a href="#">Docs</a>
+  <a href="reference/index.html">API Reference</a>
+  <a href="https://jobs.agentbase.space" rel="nofollow noopener">AI Jobs Board</a>
+</nav><nav class="table w-full min-w-full my-6 lg:my-8">
+  <p class="caption" role="heading"><span class="caption-text">The Basics:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Concepts:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/ell2a_simple.html">&#64;ell2a.simple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/versioning_and_storage.html">Versioning &amp; Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/ell2a_studio.html">Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/message_api.html">Messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/ell2a_complex.html">&#64;ell2a.complex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/agent_usage.html">Agent Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/structured_outputs.html">Structured Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/multimodality.html">Multimodality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/models_and_api_clients.html">Models &amp; API Clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">ell2a package</a></li>
+</ul>
+
+</nav>
+      </div>
+    </div>
+    <button type="button" @click="showSidebar = false"
+      class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+        stroke="none" class="h-4 w-4">
+        <path
+          d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z" />
+      </svg>
+    </button>
+  </aside>
+        <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+
+    <div id="content" role="main">
+      <section id="ell2a-the-language-model-programming-library-for-ai-agents">
+<h1>ell2a:  the language model programming library for AI Agents<a class="headerlink" href="#ell2a-the-language-model-programming-library-for-ai-agents" title="Link to this heading">¶</a></h1>
+<div style="display: flex; gap: 10px;">
+<a href="https://docs.agentbase.space/installation" target="_blank">
+    <img src="https://img.shields.io/badge/get_started-blue" alt="Install">
+</a>
+<a href="https://discord.gg/vWntgU52Xb" target="_blank">
+    <img src="https://dcbadge.limes.pink/api/server/vWntgU52Xb?style=flat" alt="Discord">
+</a>
+<a href="https://twitter.com/wgussml" target="_blank">
+    <img alt="X (formerly Twitter) Follow" src="https://img.shields.io/twitter/follow/wgussml">
+</a>
+<a href="https://jobs.agentbase.space" target="_blank">
+    <img src="https://img.shields.io/badge/jobs-board-green" alt="Jobs Board">
+</a>
+</div><p><code class="docutils literal notranslate"><span class="pre">ell2a</span></code> is a lightweight prompt engineering library treating prompts as functions. After years of building and using language models at OpenAI and in the startup ecosystem, <code class="docutils literal notranslate"><span class="pre">ell2a</span></code> was designed from the following principles:</p>
+<section id="prompts-are-programs-not-strings">
+<h2>Prompts are programs, not strings<a class="headerlink" href="#prompts-are-programs-not-strings" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">)</span>
+</span><span id="line-4"><span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">world</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-5"><span class="w">    </span><span class="sd">&quot;&quot;&quot;You are a helpful assistant&quot;&quot;&quot;</span> <span class="c1"># System prompt</span>
+</span><span id="line-6">    <span class="n">name</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+</span><span id="line-7">    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Say hello to </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&quot;</span> <span class="c1"># User prompt</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="n">hello</span><span class="p">(</span><span class="s2">&quot;sam altman&quot;</span><span class="p">)</span> <span class="c1"># just a str, &quot;Hello Sam Altman! ...&quot;</span>
+</span></code></pre></div>
+</div>
+<a class="rounded-image invertible-image reference internal image-reference" href="_images/gif1.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="_images/gif1.webp" style="width: 100%;" /></a>
+<p>Prompts aren’t just strings; they are all the code that leads to strings being sent to a language model. In ell2a, we think of one particular way of using a language model as a discrete subroutine called a <strong>language model program</strong> (LMP).</p>
+<p>LMPs are fully encapsulated functions that produce either a string prompt or a list of messages to be sent to various multimodal language models. This encapsulation creates a clean interface for users, who only need to be aware of the required data specified to the LMP.</p>
+</section>
+<section id="prompt-engineering-is-an-optimization-process">
+<h2>Prompt engineering is an optimization process<a class="headerlink" href="#prompt-engineering-is-an-optimization-process" title="Link to this heading">¶</a></h2>
+<p>The process of prompt engineering involves many iterations, similar to the optimization processes in machine learning. Because LMPs are just functions, <code class="docutils literal notranslate"><span class="pre">ell2a</span></code> provides rich agenting for this process.</p>
+<a class="rounded-image invertible-image reference internal image-reference" href="_images/versions_small.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="_images/versions_small.webp" style="width: 100%;" /></a>
+<p><code class="docutils literal notranslate"><span class="pre">ell2a</span></code> provides <strong>automatic versioning and serialization of prompts</strong> through static and dynamic analysis and  <code class="docutils literal notranslate"><span class="pre">gpt-4o-mini</span></code> <strong>autogenerated commit messages</strong> directly to a <em>local store</em>. This process is similar to <cite>checkpointing</cite> in a machine learning training loop, but it doesn’t require any special IDE or editor - it’s all done with regular Python code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"> <span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2">
+</span><span id="line-3"><mark> <span class="n">ell2a</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="s1">&#39;./logdir&#39;</span><span class="p">)</span>  <span class="c1"># Versions your LMPs and their calls</span>
+</mark></span><span id="line-4">
+</span><span id="line-5"> <span class="c1"># ... define your lmps</span>
+</span><span id="line-6">
+</span><span id="line-7"> <span class="n">hello</span><span class="p">(</span><span class="s2">&quot;strawberry&quot;</span><span class="p">)</span> <span class="c1"># the source code of the LMP the call is saved to the store</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="agents-for-monitoring-versioning-and-visualization">
+<h2>Agents for monitoring, versioning, and visualization<a class="headerlink" href="#agents-for-monitoring-versioning-and-visualization" title="Link to this heading">¶</a></h2>
+<a class="rounded-image reference internal image-reference" href="_images/ell2a_studio_better.webp"><img alt="ell2a demonstration" class="rounded-image" src="_images/ell2a_studio_better.webp" style="width: 100%;" /></a>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">ell2a-studio<span class="w"> </span>--storage<span class="w"> </span>./logdir
+</span></code></pre></div>
+</div>
+<p>Prompt engineering goes from a dark art to a science with the right agents. <strong>Ell2a Studio is a local, open source agent for prompt version control, monitoring, visualization</strong>. With Ell2a Studio you can empiricize your prompt optimziation process over time and catch regressions before its too late.</p>
+</section>
+<section id="test-time-compute-is-important">
+<h2>Test-time compute is important<a class="headerlink" href="#test-time-compute-is-important" title="Link to this heading">¶</a></h2>
+<p>Going from a demo to something that actually works, often means prompt engineering solutions that involve multiple calls to a language model.
+By forcing a functional decomposition of the problem, <code class="docutils literal notranslate"><span class="pre">ell2a</span></code> makes it <strong>easy to implement test-time compute leveraged techniques in a readable and modular way.</strong></p>
+<a class="rounded-image invertible-image reference internal image-reference" href="_images/compositionality.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="_images/compositionality.webp" style="width: 100%;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="line-5"><span class="k">def</span> <span class="nf">write_ten_drafts</span><span class="p">(</span><span class="n">idea</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-6"><span class="w">   </span><span class="sd">&quot;&quot;&quot;You are an adept story writer. The story should only be 3 paragraphs&quot;&quot;&quot;</span>
+</span><span id="line-7">   <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Write a story about </span><span class="si">{</span><span class="n">idea</span><span class="si">}</span><span class="s2">.&quot;</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span id="line-10"><span class="k">def</span> <span class="nf">choose_the_best_draft</span><span class="p">(</span><span class="n">drafts</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+</span><span id="line-11"><span class="w">   </span><span class="sd">&quot;&quot;&quot;You are an expert fiction editor.&quot;&quot;&quot;</span>
+</span><span id="line-12">   <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Choose the best draft from the following list: </span><span class="si">{</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">drafts</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="n">drafts</span> <span class="o">=</span> <span class="n">write_ten_drafts</span><span class="p">(</span><span class="n">idea</span><span class="p">)</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="n">best_draft</span> <span class="o">=</span> <span class="n">choose_the_best_draft</span><span class="p">(</span><span class="n">drafts</span><span class="p">)</span> <span class="c1"># Best of 10 sampling.</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="every-call-to-a-language-model-is-valuable">
+<h2>Every call to a language model is valuable<a class="headerlink" href="#every-call-to-a-language-model-is-valuable" title="Link to this heading">¶</a></h2>
+<p>Every call to a language model is worth its weight in credits. In practice, LLM invocations are used for fine tuning, distillation, k-shot prompting, reinforcement learning from human feedback, and more. A good prompt engineering system should capture these as first class concepts.</p>
+<a class="rounded-image invertible-image reference internal image-reference" href="_images/invocations.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="_images/invocations.webp" style="width: 100%;" /></a>
+<p>In addition to storing the source code of every LMP, <code class="docutils literal notranslate"><span class="pre">ell2a</span></code> optionally saves every call to a language model locally. This allows you to generate invocaiton datasets, compare LMP outputs by version, and generally do more with the full spectrum of prompt engineering artifacts.</p>
+</section>
+<section id="complexity-when-you-need-it-simplicity-when-you-don-t">
+<h2>Complexity when you need it, simplicity when you don’t<a class="headerlink" href="#complexity-when-you-need-it-simplicity-when-you-don-t" title="Link to this heading">¶</a></h2>
+<p>Using language models is <strong>just passing strings around, except when it’s not.</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">agent</span><span class="p">()</span>
+</span><span id="line-4"><span class="k">def</span> <span class="nf">scrape_website</span><span class="p">(</span><span class="n">url</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-5">   <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span><span id="line-6">
+</span><span id="line-7"><mark><span class="nd">@ell2a</span><span class="o">.</span><span class="n">complex</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-5-omni&quot;</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="p">[</span><span class="n">scrape_website</span><span class="p">])</span>
+</mark></span><span id="line-8"><span class="k">def</span> <span class="nf">get_news_story</span><span class="p">(</span><span class="n">topic</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-9">   <span class="k">return</span> <span class="p">[</span>
+</span><span id="line-10">      <span class="n">ell2a</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Use the web to find a news story about the topic&quot;&quot;&quot;</span><span class="p">),</span>
+</span><span id="line-11">      <span class="n">ell2a</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Find a news story about </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</span><span id="line-12">   <span class="p">]</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="n">message_response</span> <span class="o">=</span> <span class="n">get_news_story</span><span class="p">(</span><span class="s2">&quot;stock market&quot;</span><span class="p">)</span>
+</span><span id="line-15"><span class="k">if</span> <span class="n">message_response</span><span class="o">.</span><span class="n">agent_calls</span><span class="p">:</span>
+</span><span id="line-16">   <span class="k">for</span> <span class="n">agent_call</span> <span class="ow">in</span> <span class="n">message_response</span><span class="o">.</span><span class="n">agent_calls</span><span class="p">:</span>
+</span><span id="line-17">      <span class="c1">#...</span>
+</span><span id="line-18"><span class="k">if</span> <span class="n">message_response</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span><span id="line-19">   <span class="nb">print</span><span class="p">(</span><span class="n">message_response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span><span id="line-20"><span class="k">if</span> <span class="n">message_response</span><span class="o">.</span><span class="n">audio</span><span class="p">:</span>
+</span><span id="line-21">   <span class="c1"># message_response.play_audio() supprot for multimodal outputs will work as soon as the LLM supports it</span>
+</span><span id="line-22">   <span class="k">pass</span>
+</span></code></pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">&#64;ell2a.simple</span></code> causes LMPs to yield <strong>simple string outputs.</strong> But when more complex or multimodal output is needed, <code class="docutils literal notranslate"><span class="pre">&#64;ell2a.complex</span></code> can be used to yield <code class="docutils literal notranslate"><span class="pre">Message</span></code> objects responses from language mdoels.</p>
+</section>
+<section id="multimodality-should-be-first-class">
+<h2>Multimodality should be first class<a class="headerlink" href="#multimodality-should-be-first-class" title="Link to this heading">¶</a></h2>
+<p>LLMs can process and generate various types of content, including text, images, audio, and video. Prompt engineering with these data types should be as easy as it is with text.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><mark><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</mark></span><span id="line-2"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-3">
+</span><span id="line-4">
+</span><span id="line-5"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span id="line-6"><span class="k">def</span> <span class="nf">describe_activity</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">):</span>
+</span><span id="line-7">   <span class="k">return</span> <span class="p">[</span>
+</span><span id="line-8">      <span class="n">ell2a</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;You are VisionGPT. Answer &lt;5 words all lower case.&quot;</span><span class="p">),</span>
+</span><span id="line-9"><mark>      <span class="n">ell2a</span><span class="o">.</span><span class="n">user</span><span class="p">([</span><span class="s2">&quot;Describe what the person in the image is doing:&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">])</span>
+</mark></span><span id="line-10">   <span class="p">]</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># Capture an image from the webcam</span>
+</span><span id="line-13"><span class="n">describe_activity</span><span class="p">(</span><span class="n">capture_webcam_image</span><span class="p">())</span> <span class="c1"># &quot;they are holding a book&quot;</span>
+</span></code></pre></div>
+</div>
+<a class="rounded-image invertible-image reference internal image-reference" href="_images/multimodal_compressed.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="_images/multimodal_compressed.webp" style="width: 100%;" /></a>
+<p><code class="docutils literal notranslate"><span class="pre">ell2a</span></code> supports rich type coercion for multimodal inputs and outputs. You can use PIL images, audio, and other multimodal inputs inline in <code class="docutils literal notranslate"><span class="pre">Message</span></code> objects returned by LMPs.</p>
+</section>
+<section id="prompt-engineering-libraries-shouldn-t-interfere-with-your-workflow">
+<h2>Prompt engineering libraries shouldn’t interfere with your workflow<a class="headerlink" href="#prompt-engineering-libraries-shouldn-t-interfere-with-your-workflow" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ell2a</span></code> is designed to be a lightweight and unobtrusive library. It doesn’t require you to change your coding style or use special editors.</p>
+<a class="rounded-image reference internal image-reference" href="_images/useitanywhere_compressed.webp"><img alt="ell2a demonstration" class="rounded-image" src="_images/useitanywhere_compressed.webp" style="width: 100%;" /></a>
+<p>You can continue to use regular Python code in your IDE to define and modify your prompts, while leveraging ell2a’s features to visualize and analyze your prompts. Migrate from langchain to <code class="docutils literal notranslate"><span class="pre">ell2a</span></code> one function at a time.</p>
+<hr class="docutils" />
+<p>To get started with <code class="docutils literal notranslate"><span class="pre">ell2a</span></code>, see the <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a> section, or go onto <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> and get ell2a installed.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+    </div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
+    <div class="ml-auto">
+      <a href="installation.html"
+         class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4">
+        Installation
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="ml-2 h-4 w-4">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    </div>
+</div></div><aside id="right-sidebar" class="hidden text-sm xl:block">
+  <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+    <ul>
+<li><a class="reference internal" href="#prompts-are-programs-not-strings">Prompts are programs, not strings</a></li>
+<li><a class="reference internal" href="#prompt-engineering-is-an-optimization-process">Prompt engineering is an optimization process</a></li>
+<li><a class="reference internal" href="#agents-for-monitoring-versioning-and-visualization">Agents for monitoring, versioning, and visualization</a></li>
+<li><a class="reference internal" href="#test-time-compute-is-important">Test-time compute is important</a></li>
+<li><a class="reference internal" href="#every-call-to-a-language-model-is-valuable">Every call to a language model is valuable</a></li>
+<li><a class="reference internal" href="#complexity-when-you-need-it-simplicity-when-you-don-t">Complexity when you need it, simplicity when you don’t</a></li>
+<li><a class="reference internal" href="#multimodality-should-be-first-class">Multimodality should be first class</a></li>
+<li><a class="reference internal" href="#prompt-engineering-libraries-shouldn-t-interfere-with-your-workflow">Prompt engineering libraries shouldn’t interfere with your workflow</a><ul>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+        </main>
+      </div>
+    </div><footer class="py-6 border-t border-border md:py-0">
+    <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+      <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+        <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, Xingqiang Chen&nbsp;Built with <a class="font-medium underline underline-offset-4"
+    href="https://www.sphinx-doc.org"
+    rel="noreferrer">Sphinx 7.2.6</a></p>
+</div>
+</div>
+</footer>
+  </div>
+  
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script defer="defer" src="_static/theme.js?v=e82a16a3"></script>
+  
+</body>
+</html>

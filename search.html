@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-content_root="./"
+      x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }"
+      x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+      class="scroll-smooth"
+      :class="{'dark': darkMode === 'dark' || (darkMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}"
+>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+  
+    <title>Search | ell2a  documentation</title>
+    <meta property="og:title" content="Search | ell2a  documentation" />
+    <meta name="twitter:title" content="Search | ell2a  documentation" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5cc6ec80" />
+      <link rel="stylesheet" type="text/css" href="_static/theme.css?v=ecdfb4fc" />
+      <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css?v=a0a71c94" />
+      <link rel="icon" href="_static/favicon.ico" />
+        <link rel="search" title="Search" href="#" />
+        <link rel="index" title="Index" href="genindex.html" />
+
+    <script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script> 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-220ZB10X27"></script>
+<script>
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+
+        gtag('config', 'G-220ZB10X27')
+    }
+</script>
+
+<style>
+    .rounded-image {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    function invertImage(dark) {
+        var images = document.querySelectorAll('.invertible-image img')
+        var htmlElement = document.documentElement
+        images.forEach(function (image) {
+            if (!dark) {
+                image.style.filter = 'invert(100%) hue-rotate(160deg)'
+            } else {
+                image.style.filter = 'none'
+            }
+        })
+    }
+
+    // Run when the 'dark' class is added or removed from the <html> element
+    const htmlElement = document.documentElement
+
+    // Use MutationObserver to detect changes in the class attribute
+    const observer = new MutationObserver((mutations) => {
+        console.log(document.documentElement.classList)
+        mutations.forEach((mutation) => {
+            invertImage(document.documentElement.classList.contains('dark'))
+        })
+    })
+
+    observer.observe(htmlElement, { attributes: true, attributeFilter: ['class'] })
+</script>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:url" content="https://docs.agentbase.space/" />
+<meta
+    property="og:description"
+    content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs."
+/>
+<meta property="og:image" content="https://docs.agentbase.space/_static/og2.png" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta
+    property="twitter:description"
+    content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs."
+/>
+
+<!-- Additional SEO tags -->
+<meta
+    name="description"
+    content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs."
+/>
+<meta name="keywords" content="ell2a, language model programming, prompt engineering, LLM, AI, machine learning, GPT" />
+<meta name="author" content="Xingqiang Chen" />
+
+
+</head>
+<body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+    <div x-cloak x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div><div id="page" class="relative flex flex-col min-h-screen"><a href="#content" class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100">
+      Skip to content
+    </a><header
+  class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+    <div class="hidden mr-4 md:flex">
+<style>
+    :root {
+        --color-1: 0 100% 63%;
+        --color-2: 270 100% 63%;
+        --color-3: 210 100% 63%;
+        --color-4: 195 100% 63%;
+        --color-5: 90 100% 63%;
+    }
+
+    @keyframes rainbow {
+        0% {
+            background-position: 0%;
+        }
+        100% {
+            background-position: 200%;
+        }
+    }
+
+    .github-star-btn {
+        height: 2.2rem;
+        padding: 0.5rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        border: 0;
+        position: relative;
+        background-size: 200%;
+        background-clip: padding-box, border-box, border-box;
+        background-origin: border-box;
+        border: calc(0.08 * 1rem) solid transparent;
+        color: #fff;
+        background-image: linear-gradient(#121213, #121213),
+            linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),
+            linear-gradient(
+                90deg,
+                hsl(var(--color-1)),
+                hsl(var(--color-5)),
+                hsl(var(--color-3)),
+                hsl(var(--color-4)),
+                hsl(var(--color-2))
+            );
+        animation: rainbow 2s infinite linear;
+    }
+
+    .github-star-btn::before {
+        content: '';
+        position: absolute;
+        bottom: -20%;
+        left: 50%;
+        z-index: 0;
+        height: 20%;
+        width: 60%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+            90deg,
+            hsl(var(--color-1)),
+            hsl(var(--color-5)),
+            hsl(var(--color-3)),
+            hsl(var(--color-4)),
+            hsl(var(--color-2))
+        );
+        background-size: 200%;
+        filter: blur(calc(0.8 * 1rem));
+        animation: rainbow 2s infinite linear;
+    }
+
+    .dark .github-star-btn {
+        color: #030303;
+        background-image: linear-gradient(#fff, #fff),
+            linear-gradient(#fff 50%, rgba(255, 255, 255, 0.6) 80%, rgba(0, 0, 0, 0)),
+            linear-gradient(
+                90deg,
+                hsl(var(--color-1)),
+                hsl(var(--color-5)),
+                hsl(var(--color-3)),
+                hsl(var(--color-4)),
+                hsl(var(--color-2))
+            );
+    }
+
+    nav a {
+        white-space: nowrap;
+    }
+
+    .twin-btn-container {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-direction: row-reverse;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .twin-btn-container {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .github-star-btn {
+            font-size: 12px;
+            padding: 0.4rem 0.8rem;
+        }
+    }
+</style>
+
+<a href="index.html" class="flex items-center mr-6">
+    <img
+        width="120"
+        height="24"
+        class="mr-2 hidden dark:block"
+        src="_static/ell2a-wide-dark.png"
+        alt="Logo"
+        style="min-width: 120px; max-width: 120px"
+    />
+    <img
+        width="120"
+        height="24"
+        class="mr-2 dark:hidden"
+        src="_static/ell2a-wide-light.png"
+        alt="Logo"
+        style="min-width: 120px; max-width: 120px"
+    /></a>
+<nav class="flex items-center space-x-6 text-sm font-medium">
+        <a href="index.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Docs</a>
+        <a href="reference/index.html" class="transition-colors hover:text-foreground/80 text-foreground/60">API Reference</a>
+        <a href="https://jobs.agentbase.space" class="transition-colors hover:text-foreground/80 text-foreground/60" rel="noopener nofollow">AI Jobs Board</a>
+      </nav></div><button
+      class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
+      type="button" @click="showSidebar = true">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" aria-hidden="true"
+        fill="currentColor">
+        <path
+          d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z" />
+      </svg>
+      <span class="sr-only">Toggle navigation menu</span>
+    </button>
+<div class="flex flex-wrap items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+    <div class="twin-btn-container">
+        <div class="github-star-btn-container md:w-auto mb-2 md:mb-0">
+            <a
+                href="https://github.com/chenxingqiang/ell2a"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="github-star-btn whitespace-nowrap"
+            >
+                <svg
+                    class="w-5 h-5 mr-2 hidden sm:inline-block"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                <span class="font-medium">Star on GitHub</span>
+                <svg
+                    class="star-icon w-4 h-4 ml-2"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" />
+                    </path>
+                </svg>
+                <span class="ml-2 star-count" data-stars="0" style="min-width: 3ch; text-align: center">0</span>
+            </a>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const starBtn = document.querySelector('.github-star-btn')
+                const starCount = starBtn.querySelector('.star-count')
+
+                fetch('https://api.github.com/repos/chenxingqiang/ell2a')
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const stars = data.stargazers_count
+                        animateValue(starCount, 0, stars, 1500)
+                    })
+                    .catch((error) => console.error('Error fetching GitHub stars:', error))
+            })
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1)
+                    obj.textContent = Math.floor(progress * (end - start) + start)
+                    obj.setAttribute('data-stars', obj.textContent)
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step)
+                    }
+                }
+                window.requestAnimationFrame(step)
+            }
+        </script>
+
+        <div class="searchbox-container w-full md:w-auto md:flex-none"><form id="searchbox"
+      action="#"
+      method="get"
+      class="relative flex items-center group"
+      @keydown.k.window.meta="$refs.search.focus()">
+  <input x-ref="search"
+          name="q"
+          id="search-input"
+          type="search"
+          aria-label="Search the docs"
+          placeholder="Search ..."
+          class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" />
+  <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+    <span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form></div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.querySelector('.searchbox-container input')
+                const starBtnContainer = document.querySelector('.github-star-btn-container')
+
+                if (searchInput && starBtnContainer) {
+                    const isMobile = window.innerWidth < 768 // Adjust this breakpoint as needed
+
+                    if (isMobile) {
+                        searchInput.addEventListener('focus', function () {
+                            starBtnContainer.style.display = 'none'
+                        })
+
+                        searchInput.addEventListener('blur', function () {
+                            starBtnContainer.style.display = 'block'
+                        })
+                    }
+                }
+            })
+        </script>
+    </div>
+    <nav class="flex items-center space-x-1 mt-2 md:mt-0">
+        <a href="https://discord.gg/vWntgU52Xb" title="Visit Discord" rel="noopener nofollow">
+            <div
+                class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md disabled:opacity-50 disabled:pointer-events-none hover:bg-accent hover:text-accent-foreground h-9 w-9"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="18" fill="currentColor"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M524.5 69.8a1.5 1.5 0 0 0 -.8-.7A485.1 485.1 0 0 0 404.1 32a1.8 1.8 0 0 0 -1.9 .9 337.5 337.5 0 0 0 -14.9 30.6 447.8 447.8 0 0 0 -134.4 0 309.5 309.5 0 0 0 -15.1-30.6 1.9 1.9 0 0 0 -1.9-.9A483.7 483.7 0 0 0 116.1 69.1a1.7 1.7 0 0 0 -.8 .7C39.1 183.7 18.2 294.7 28.4 404.4a2 2 0 0 0 .8 1.4A487.7 487.7 0 0 0 176 479.9a1.9 1.9 0 0 0 2.1-.7A348.2 348.2 0 0 0 208.1 430.4a1.9 1.9 0 0 0 -1-2.6 321.2 321.2 0 0 1 -45.9-21.9 1.9 1.9 0 0 1 -.2-3.1c3.1-2.3 6.2-4.7 9.1-7.1a1.8 1.8 0 0 1 1.9-.3c96.2 43.9 200.4 43.9 295.5 0a1.8 1.8 0 0 1 1.9 .2c2.9 2.4 6 4.9 9.1 7.2a1.9 1.9 0 0 1 -.2 3.1 301.4 301.4 0 0 1 -45.9 21.8 1.9 1.9 0 0 0 -1 2.6 391.1 391.1 0 0 0 30 48.8 1.9 1.9 0 0 0 2.1 .7A486 486 0 0 0 610.7 405.7a1.9 1.9 0 0 0 .8-1.4C623.7 277.6 590.9 167.5 524.5 69.8zM222.5 337.6c-29 0-52.8-26.6-52.8-59.2S193.1 219.1 222.5 219.1c29.7 0 53.3 26.8 52.8 59.2C275.3 311 251.9 337.6 222.5 337.6zm195.4 0c-29 0-52.8-26.6-52.8-59.2S388.4 219.1 417.9 219.1c29.7 0 53.3 26.8 52.8 59.2C470.7 311 447.5 337.6 417.9 337.6z"/></svg>
+            </div>
+        </a>
+        
+        <button
+            @click="darkMode = darkMode === 'light' ? 'dark' : 'light'"
+            class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9"
+            type="button"
+            aria-label="Color theme switcher"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+                viewBox="0 96 960 960"
+                fill="currentColor"
+                class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0"
+            >
+                <path
+                    d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"
+                />
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+                viewBox="0 96 960 960"
+                fill="currentColor"
+                class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100"
+            >
+                <path
+                    d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"
+                />
+            </svg>
+        </button>
+    </nav>
+</div>
+  </div>
+</header>
+
+    <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside id="left-sidebar"
+  class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
+  :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
+
+    <a href="index.html" class="!justify-start text-sm md:!hidden bg-background">
+        <img width="16" height="16" class="mr-2 hidden dark:block" src="_static/ell2a-wide-dark.png" alt="Logo" />
+        <img width="16" height="16" class="mr-2 dark:hidden" src="_static/ell2a-wide-light.png" alt="Logo" /><span class="font-bold text-clip whitespace-nowrap">ell2a  documentation</span>
+    </a>
+
+    <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+      <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
+  <a href="index.html">Docs</a>
+  <a href="reference/index.html">API Reference</a>
+  <a href="https://jobs.agentbase.space" rel="nofollow noopener">AI Jobs Board</a>
+</nav><nav class="table w-full min-w-full my-6 lg:my-8">
+  <p class="caption" role="heading"><span class="caption-text">The Basics:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Concepts:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/ell2a_simple.html">&#64;ell2a.simple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/versioning_and_storage.html">Versioning &amp; Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/ell2a_studio.html">Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/message_api.html">Messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/ell2a_complex.html">&#64;ell2a.complex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/agent_usage.html">Agent Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/structured_outputs.html">Structured Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/multimodality.html">Multimodality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/models_and_api_clients.html">Models &amp; API Clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_concepts/configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">ell2a package</a></li>
+</ul>
+
+</nav>
+      </div>
+    </div>
+    <button type="button" @click="showSidebar = false"
+      class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+        stroke="none" class="h-4 w-4">
+        <path
+          d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z" />
+      </svg>
+    </button>
+  </aside>
+        <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+  <div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs"
+     class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+  <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
+     href="index.html">
+    <span class="hidden md:inline">ell2a  documentation</span>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         height="18"
+         width="18"
+         viewBox="0 96 960 960"
+         aria-label="Home"
+         fill="currentColor"
+         stroke="none"
+         class="md:hidden">
+      <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z" />
+    </svg>
+  </a>
+  
+<div class="mr-1">/</div><span aria-current="page"
+        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Search</span>
+</nav>
+    <div id="content" role="main">
+      <div id="fallback" class="my-8 text-sm text-red-700">
+        <script>document.querySelector("#fallback").style.display = "none"</script>Please activate Javascript to enable searching the documentation.</div>
+      <div id="search-results"></div>
+    </div>
+  </div>
+
+        </main>
+      </div>
+    </div><footer class="py-6 border-t border-border md:py-0">
+    <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+      <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+        <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, Xingqiang Chen&nbsp;Built with <a class="font-medium underline underline-offset-4"
+    href="https://www.sphinx-doc.org"
+    rel="noreferrer">Sphinx 7.2.6</a></p>
+</div>
+</div>
+</footer>
+  </div>
+  
+  
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script defer="defer" src="_static/theme.js?v=e82a16a3"></script>
+  
+  <script src="_static/searchtools.js" defer></script>
+  <script src="_static/language_data.js" defer></script>
+  <script src="searchindex.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="../" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Versioning &amp; Tracing | ell2a  documentation</title>
+<meta content="Versioning &amp; Tracing | ell2a  documentation" property="og:title"/>
+<meta content="Versioning &amp; Tracing | ell2a  documentation" name="twitter:title"/>
+<link href="../_static/pygments.css?v=5cc6ec80" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
+<link href="../_static/autodoc_pydantic.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/favicon.ico" rel="icon"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="ell2a_studio.html" rel="next" title="Studio"/>
+<link href="ell2a_simple.html" rel="prev" title="@ell2a.simple"/>
+<script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script>
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-220ZB10X27"></script>
+<script>
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+
+        gtag('config', 'G-220ZB10X27')
+    }
+</script>
+<style>
+    .rounded-image {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+</style>
+<script>
+    function invertImage(dark) {
+        var images = document.querySelectorAll('.invertible-image img')
+        var htmlElement = document.documentElement
+        images.forEach(function (image) {
+            if (!dark) {
+                image.style.filter = 'invert(100%) hue-rotate(160deg)'
+            } else {
+                image.style.filter = 'none'
+            }
+        })
+    }
+
+    // Run when the 'dark' class is added or removed from the <html> element
+    const htmlElement = document.documentElement
+
+    // Use MutationObserver to detect changes in the class attribute
+    const observer = new MutationObserver((mutations) => {
+        console.log(document.documentElement.classList)
+        mutations.forEach((mutation) => {
+            invertImage(document.documentElement.classList.contains('dark'))
+        })
+    })
+
+    observer.observe(htmlElement, { attributes: true, attributeFilter: ['class'] })
+</script>
+
+<meta content="https://docs.agentbase.space/" property="og:url"/>
+<meta content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs." property="og:description"/>
+<meta content="https://docs.agentbase.space/_static/og2.png" property="og:image"/>
+
+<meta content="summary_large_image" property="twitter:card"/>
+<meta content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs." property="twitter:description"/>
+
+<meta content="ell2a is a lightweight prompt engineering library treating prompts as functions. It provides agents for versioning, monitoring, and visualization of language model programs." name="description"/>
+<meta content="ell2a, language model programming, prompt engineering, LLM, AI, machine learning, GPT" name="keywords"/>
+<meta content="Xingqiang Chen" name="author"/>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<style>
+    :root {
+        --color-1: 0 100% 63%;
+        --color-2: 270 100% 63%;
+        --color-3: 210 100% 63%;
+        --color-4: 195 100% 63%;
+        --color-5: 90 100% 63%;
+    }
+
+    @keyframes rainbow {
+        0% {
+            background-position: 0%;
+        }
+        100% {
+            background-position: 200%;
+        }
+    }
+
+    .github-star-btn {
+        height: 2.2rem;
+        padding: 0.5rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        border: 0;
+        position: relative;
+        background-size: 200%;
+        background-clip: padding-box, border-box, border-box;
+        background-origin: border-box;
+        border: calc(0.08 * 1rem) solid transparent;
+        color: #fff;
+        background-image: linear-gradient(#121213, #121213),
+            linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),
+            linear-gradient(
+                90deg,
+                hsl(var(--color-1)),
+                hsl(var(--color-5)),
+                hsl(var(--color-3)),
+                hsl(var(--color-4)),
+                hsl(var(--color-2))
+            );
+        animation: rainbow 2s infinite linear;
+    }
+
+    .github-star-btn::before {
+        content: '';
+        position: absolute;
+        bottom: -20%;
+        left: 50%;
+        z-index: 0;
+        height: 20%;
+        width: 60%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+            90deg,
+            hsl(var(--color-1)),
+            hsl(var(--color-5)),
+            hsl(var(--color-3)),
+            hsl(var(--color-4)),
+            hsl(var(--color-2))
+        );
+        background-size: 200%;
+        filter: blur(calc(0.8 * 1rem));
+        animation: rainbow 2s infinite linear;
+    }
+
+    .dark .github-star-btn {
+        color: #030303;
+        background-image: linear-gradient(#fff, #fff),
+            linear-gradient(#fff 50%, rgba(255, 255, 255, 0.6) 80%, rgba(0, 0, 0, 0)),
+            linear-gradient(
+                90deg,
+                hsl(var(--color-1)),
+                hsl(var(--color-5)),
+                hsl(var(--color-3)),
+                hsl(var(--color-4)),
+                hsl(var(--color-2))
+            );
+    }
+
+    nav a {
+        white-space: nowrap;
+    }
+
+    .twin-btn-container {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-direction: row-reverse;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .twin-btn-container {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .github-star-btn {
+            font-size: 12px;
+            padding: 0.4rem 0.8rem;
+        }
+    }
+</style>
+<a class="flex items-center mr-6" href="../index.html">
+<img alt="Logo" class="mr-2 hidden dark:block" height="24" src="../_static/ell2a-wide-dark.png" style="min-width: 120px; max-width: 120px" width="120"/>
+<img alt="Logo" class="mr-2 dark:hidden" height="24" src="../_static/ell2a-wide-light.png" style="min-width: 120px; max-width: 120px" width="120"/></a>
+<nav class="flex items-center space-x-6 text-sm font-medium">
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="../index.html">Docs</a>
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="../reference/index.html">API Reference</a>
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://jobs.agentbase.space" rel="noopener nofollow">AI Jobs Board</a>
+</nav></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex flex-wrap items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+<div class="twin-btn-container">
+<div class="github-star-btn-container md:w-auto mb-2 md:mb-0">
+<a class="github-star-btn whitespace-nowrap" href="https://github.com/chenxingqiang/ell2a" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" class="w-5 h-5 mr-2 hidden sm:inline-block" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path>
+</svg>
+<span class="font-medium">Star on GitHub</span>
+<svg class="star-icon w-4 h-4 ml-2" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+<animate attributename="opacity" dur="2s" repeatcount="indefinite" values="1;0.7;1"></animate>
+</path>
+</svg>
+<span class="ml-2 star-count" data-stars="0" style="min-width: 3ch; text-align: center">0</span>
+</a>
+</div>
+<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const starBtn = document.querySelector('.github-star-btn')
+                const starCount = starBtn.querySelector('.star-count')
+
+                fetch('https://api.github.com/repos/chenxingqiang/ell2a')
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const stars = data.stargazers_count
+                        animateValue(starCount, 0, stars, 1500)
+                    })
+                    .catch((error) => console.error('Error fetching GitHub stars:', error))
+            })
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1)
+                    obj.textContent = Math.floor(progress * (end - start) + start)
+                    obj.setAttribute('data-stars', obj.textContent)
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step)
+                    }
+                }
+                window.requestAnimationFrame(step)
+            }
+        </script>
+<div class="searchbox-container w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form></div>
+<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.querySelector('.searchbox-container input')
+                const starBtnContainer = document.querySelector('.github-star-btn-container')
+
+                if (searchInput && starBtnContainer) {
+                    const isMobile = window.innerWidth < 768 // Adjust this breakpoint as needed
+
+                    if (isMobile) {
+                        searchInput.addEventListener('focus', function () {
+                            starBtnContainer.style.display = 'none'
+                        })
+
+                        searchInput.addEventListener('blur', function () {
+                            starBtnContainer.style.display = 'block'
+                        })
+                    }
+                }
+            })
+        </script>
+</div>
+<nav class="flex items-center space-x-1 mt-2 md:mt-0">
+<a href="https://discord.gg/vWntgU52Xb" rel="noopener nofollow" title="Visit Discord">
+<div class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md disabled:opacity-50 disabled:pointer-events-none hover:bg-accent hover:text-accent-foreground h-9 w-9">
+<svg fill="currentColor" height="18" viewbox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M524.5 69.8a1.5 1.5 0 0 0 -.8-.7A485.1 485.1 0 0 0 404.1 32a1.8 1.8 0 0 0 -1.9 .9 337.5 337.5 0 0 0 -14.9 30.6 447.8 447.8 0 0 0 -134.4 0 309.5 309.5 0 0 0 -15.1-30.6 1.9 1.9 0 0 0 -1.9-.9A483.7 483.7 0 0 0 116.1 69.1a1.7 1.7 0 0 0 -.8 .7C39.1 183.7 18.2 294.7 28.4 404.4a2 2 0 0 0 .8 1.4A487.7 487.7 0 0 0 176 479.9a1.9 1.9 0 0 0 2.1-.7A348.2 348.2 0 0 0 208.1 430.4a1.9 1.9 0 0 0 -1-2.6 321.2 321.2 0 0 1 -45.9-21.9 1.9 1.9 0 0 1 -.2-3.1c3.1-2.3 6.2-4.7 9.1-7.1a1.8 1.8 0 0 1 1.9-.3c96.2 43.9 200.4 43.9 295.5 0a1.8 1.8 0 0 1 1.9 .2c2.9 2.4 6 4.9 9.1 7.2a1.9 1.9 0 0 1 -.2 3.1 301.4 301.4 0 0 1 -45.9 21.8 1.9 1.9 0 0 0 -1 2.6 391.1 391.1 0 0 0 30 48.8 1.9 1.9 0 0 0 2.1 .7A486 486 0 0 0 610.7 405.7a1.9 1.9 0 0 0 .8-1.4C623.7 277.6 590.9 167.5 524.5 69.8zM222.5 337.6c-29 0-52.8-26.6-52.8-59.2S193.1 219.1 222.5 219.1c29.7 0 53.3 26.8 52.8 59.2C275.3 311 251.9 337.6 222.5 337.6zm195.4 0c-29 0-52.8-26.6-52.8-59.2S388.4 219.1 417.9 219.1c29.7 0 53.3 26.8 52.8 59.2C470.7 311 447.5 337.6 417.9 337.6z"></path></svg>
+</div>
+</a>
+<button @click="darkMode = darkMode === 'light' ? 'dark' : 'light'" aria-label="Color theme switcher" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="!justify-start text-sm md:!hidden bg-background" href="../index.html">
+<img alt="Logo" class="mr-2 hidden dark:block" height="16" src="../_static/ell2a-wide-dark.png" width="16"/>
+<img alt="Logo" class="mr-2 dark:hidden" height="16" src="../_static/ell2a-wide-light.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">ell2a  documentation</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
+<a href="../index.html">Docs</a>
+<a href="../reference/index.html">API Reference</a>
+<a href="https://jobs.agentbase.space" rel="nofollow noopener">AI Jobs Board</a>
+</nav><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">The Basics:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Concepts:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ell2a_simple.html">@ell2a.simple</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Versioning &amp; Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ell2a_studio.html">Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message_api.html">Messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ell2a_complex.html">@ell2a.complex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent_usage.html">Agent Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structured_outputs.html">Structured Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multimodality.html">Multimodality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models_and_api_clients.html">Models &amp; API Clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">ell2a package</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../index.html">
+<span class="hidden md:inline">ell2a  documentation</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Versioning &amp; Tracing</span>
+</nav>
+<div id="content" role="main">
+<section id="versioning-tracing">
+<h1>Versioning &amp; Tracing<a class="headerlink" href="#versioning-tracing" title="Link to this heading">¶</a></h1>
+<p>Prompt Engineering is the process of rapidly iterating on the set of system, user, and pre-packaged assistant messages sent to a language model. The goal is to maximize some explicit or implied objective function. In an ideal scientific scenario, we would have reward models or metrics that could automatically assess the quality of prompts. One would simply modify the text or formatting of the sent messages to maximize this objective.</p>
+<p>However, the reality of this process is much messier. Often, a prompt engineer will work on a few examples for the language model program they’re trying to develop, tweaking the prompt slightly over time, testing and hoping that the resulting outputs seem better in practice. This process comes with several issues:</p>
+<ol class="arabic simple">
+<li><p>It’s often unclear if a change in a prompt will uniformly improve the quality of a language model program.</p></li>
+<li><p>Sometimes regressions are introduced, unknown to the prompt engineer, due to dependencies elsewhere in the codebase.</p></li>
+<li><p>The process of testing different hypotheses and then reverting those tests often involves using the undo/redo shortcuts in the editor of choice, which is not ideal for tracking changes.</p></li>
+</ol>
+<section id="checkpointing-prompts">
+<h2>Checkpointing prompts<a class="headerlink" href="#checkpointing-prompts" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#checkpointing-prompts'">¶</a></h2>
+<p>A solution to this problem can be found by drawing analogies to the training process in machine learning. Prompt engineering, in essence, is a form of parameter search. We modify a model over time with local updates, aiming to maximize or minimize some global objective function.</p>
+<p>In machine learning, this process is known as the training loop. Each instance of the model’s parameters is called a checkpoint. These checkpoints are periodically saved and evaluated for quality. If a hyperparameter change leads to a failure in the training process, practitioners can quickly revert to a previous checkpoint, much like version control in software engineering.</p>
+<p>However, versioning or checkpointing prompts during the prompt engineering process is cumbersome with standard language model API calls or current frameworks. Prompt engineers often resort to inefficient methods:</p>
+<ul class="simple">
+<li><p>Checking in prompt code to version control systems like git for every minor change during the iterative prompt engineering process</p></li>
+<li><p>Storing commit hashes alongside outputs for comparison</p></li>
+<li><p>Saving prompts and outputs to text files</p></li>
+</ul>
+<p>These approaches are highly cumbersome and go against typical version control workflows in software development. Some prompt engineering frameworks offer versioning, but they often require the use of pre-built IDEs or specific naming conventions. This approach doesn’t align well with real-world LLM applications, where calls are often scattered throughout a codebase.</p>
+<p>A key feature of <code class="docutils literal notranslate"><span class="pre">ell2a</span></code> is its behind-the-scenes version control system for language model programs. This system allows for comparison, visualization, and storage of prompts as the codebase evolves, both in production and development settings. Importantly, it requires no changes to the prompt engineer’s workflow.</p>
+<section id="serializing-prompts-via-lexical-closures">
+<h3>Serializing prompts via lexical closures<a class="headerlink" href="#serializing-prompts-via-lexical-closures" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#serializing-prompts-via-lexical-closures'">¶</a></h3>
+<p>This automatic versioning is possible because ell2a treats prompts as discrete functional units called language model programs. By encapsulating the prompt within a function, we can use static and dynamic analysis agents to extract the source code of a prompt program and all its lexical dependencies at any point in time. This approach captures the exact set of source code needed to reproduce the prompt.</p>
+<p>Consider the following function embedded in a large code base.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span> <span class="nn">myother_module</span> <span class="kn">import</span> <span class="n">CONSTANT</span>
+</span><span id="line-2"><span class="k">def</span> <span class="nf">other_code</span><span class="p">():</span>
+</span><span id="line-3">    <span class="nb">print</span><span class="p">(</span><span class="s2">"hello"</span><span class="p">)</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="k">def</span> <span class="nf">some_other_function</span><span class="p">():</span>
+</span><span id="line-6">    <span class="k">return</span> <span class="s2">"to bob"</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o"</span><span class="p">)</span>
+</span><span id="line-9"><span class="k">def</span> <span class="nf">hi</span><span class="p">():</span>
+</span><span id="line-10"><span class="w">    </span><span class="sd">"""You are a helpful assistant"""</span>
+</span><span id="line-11">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"say hi </span><span class="si">{</span><span class="n">some_other_function</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">CONSTANT</span><span class="si">}</span><span class="s2"> times."</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="k">def</span> <span class="nf">some_other_code</span><span class="p">():</span>
+</span><span id="line-14">    <span class="k">return</span> <span class="s2">"some other code"</span>
+</span></code></pre></div>
+</div>
+<p>What does it mean to serialize and version the LMP <cite>hi</cite> above? A first approach might be to simply capture the source code of the function body and its signature.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o"</span><span class="p">)</span>
+</span><span id="line-2"><span class="k">def</span> <span class="nf">hi</span><span class="p">():</span>
+</span><span id="line-3"><span class="w">    </span><span class="sd">"""You are a helpful assistant"""</span>
+</span><span id="line-4">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"say hi </span><span class="si">{</span><span class="n">some_other_function</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">CONSTANT</span><span class="si">}</span><span class="s2"> times."</span>
+</span></code></pre></div>
+</div>
+<p>However, this approach isn’t quite sufficient. If the dependency <cite>some_other_function</cite> changes, the language model program <cite>hi</cite> has fundamentally changed as well. Consequently, all the outputs you expect to see when calling it would also change. Fortunately, the solution is to compute the lexical closure. The lexical closure of a function is essentially its source code along with the source of every global and free variable that it depends on. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">lexical_closure</span><span class="p">(</span><span class="n">hi</span><span class="p">)</span>
+</span><span id="line-2"><span class="go">'''</span>
+</span><span id="line-3"><span class="go">CONSTANT = 6</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="go">def some_other_function():</span>
+</span><span id="line-6"><span class="go">    return "to bob"</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="go">@ell2a.simple(model="gpt-4o")</span>
+</span><span id="line-9"><span class="go">def hi():</span>
+</span><span id="line-10"><span class="go">    """You are a helpful assistant"""</span>
+</span><span id="line-11"><span class="go">    return f"say hi {some_other_function()} {CONSTANT} times."</span>
+</span><span id="line-12"><span class="go">'''</span>
+</span></code></pre></div>
+</div>
+<p>Full closure can be computed through static analysis by inspecting the Abstract Syntax Tree (AST) of the function and all of its bound globals. This process recursively enumerates dependencies to compute a minimal set of source code that would enable you to reproduce the function. For brevity, we can ignore system and user libraries that were installed by package managers, as these are typically considered part of the execution environment rather than the function’s specific closure.</p>
+</section>
+<section id="constructing-a-dependency-graph">
+<h3>Constructing a dependency graph<a class="headerlink" href="#constructing-a-dependency-graph" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#constructing-a-dependency-graph'">¶</a></h3>
+<p>In addition, when a language model program depends on another prompt (i.e., when one language model program calls another), the dependent prompt will automatically appear within the lexical closure of the calling prompt. This allows us to construct a computation graph that illustrates how language model programs depend on one another to execute, effectively leveraging test-time compute. This graph provides a clear visualization of the relationships and dependencies between different prompts in a complex language model program.</p>
+<a class="rounded-image invertible-image reference internal image-reference" href="../_images/compositionality.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="../_images/compositionality.webp" style="width: 100%;"/></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+</span><span id="line-3">
+</span><span id="line-4">
+</span><span id="line-5"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span id="line-6"><span class="k">def</span> <span class="nf">generate_story_ideas</span><span class="p">(</span><span class="n">about</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-7"><span class="w">    </span><span class="sd">"""You are an expert story ideator. Only answer in a single sentence."""</span>
+</span><span id="line-8">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Generate a story idea about </span><span class="si">{</span><span class="n">about</span><span class="si">}</span><span class="s2">."</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span id="line-11"><span class="k">def</span> <span class="nf">write_a_draft_of_a_story</span><span class="p">(</span><span class="n">idea</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-12"><span class="w">    </span><span class="sd">"""You are an adept story writer. The story should only be 3 paragraphs."""</span>
+</span><span id="line-13">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Write a story about </span><span class="si">{</span><span class="n">idea</span><span class="si">}</span><span class="s2">."</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span id="line-16"><span class="k">def</span> <span class="nf">choose_the_best_draft</span><span class="p">(</span><span class="n">drafts</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+</span><span id="line-17"><span class="w">    </span><span class="sd">"""You are an expert fiction editor."""</span>
+</span><span id="line-18">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Choose the best draft from the following list: </span><span class="si">{</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">drafts</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4-turbo"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</span><span id="line-21"><span class="k">def</span> <span class="nf">write_a_really_good_story</span><span class="p">(</span><span class="n">about</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-22"><span class="w">    </span><span class="sd">"""You are an expert novelist that writes in the style of Hemmingway. You write in lowercase."""</span>
+</span><span id="line-23">    <span class="c1"># Note: You can pass in api_params to control the language model call</span>
+</span><span id="line-24">    <span class="c1"># in the case n = 4 tells OpenAI to generate a batch of 4 outputs.</span>
+</span><span id="line-25">    <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_story_ideas</span><span class="p">(</span><span class="n">about</span><span class="p">,</span> <span class="n">api_params</span><span class="o">=</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">)))</span>
+</span><span id="line-26">
+</span><span id="line-27">    <span class="n">drafts</span> <span class="o">=</span> <span class="p">[</span><span class="n">write_a_draft_of_a_story</span><span class="p">(</span><span class="n">idea</span><span class="p">)</span> <span class="k">for</span> <span class="n">idea</span> <span class="ow">in</span> <span class="n">ideas</span><span class="p">]</span>
+</span><span id="line-28">
+</span><span id="line-29">    <span class="n">best_draft</span> <span class="o">=</span> <span class="n">choose_the_best_draft</span><span class="p">(</span><span class="n">drafts</span><span class="p">)</span>
+</span><span id="line-30">
+</span><span id="line-31">
+</span><span id="line-32">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Make a final revision of this story in your voice: </span><span class="si">{</span><span class="n">best_draft</span><span class="si">}</span><span class="s2">."</span>
+</span><span id="line-33">
+</span><span id="line-34"><span class="n">story</span> <span class="o">=</span> <span class="n">write_a_really_good_story</span><span class="p">(</span><span class="s2">"a dog"</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#versioning'">¶</a></h2>
+<p>With the ability to checkpoint and serialize prompts, we can now facilitate a key promise of a useful prompt engineering library: automatic versioning.</p>
+<p>Prompt versioning comes in two flavors: automatic versioning during the prompt engineering process, and archival versioning in storage during production deployments. The former is important for the reasons previously mentioned; as a prompt engineer changes and tunes the prompt over time, they may often revert to previous versions or need to compare across them. The latter is crucial for debugging and regression checks of production deployments, as well as the creation of large-scale fine-tuning and comparison datasets. ell2a is designed with both of these in mind.</p>
+<p>In designing ell2a, it was essential that this versioning system happened entirely behind the scenes and did not dictate any specific way in which the prompt engineer needs to facilitate their own process. Therefore, to enable automatic versioning, one simply passes in a storage parameter to the initialization function of ell2a, where various settings are configured:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">ell2a</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="s1">'./logdir'</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">store</span></code> points to either a local path to store data or an <code class="docutils literal notranslate"><span class="pre">ell2a.storage.Store</span></code> object. An ell2a store is an interface for storing prompts and their invocations, i.e., the input and outputs of a language model program as well as the language model called, generated, and any other metadata. By default, when a path is specified, ell2a uses a local SQLite DB and an expandable file-based blob store for larger language model programs or invocations that cannot effectively fit into rows of the database.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For production use, ell2a can utilize a store in any arbitrary database. In the near future, ell2a will be launching a service similar to Weights &amp; Biases (wandb), where your team can store all prompts in a centralized prompt version control system. This will provide collaborative features and advanced versioning capabilities, much like what wandb offers for machine learning experiments.</p>
+</div>
+<p>When ell2a is initialized with a store of any kind, anytime a language model program is invoked (actually, the first time it’s invoked), the lexical closure of source of that language model program is computed and hashed to create a version hash for that language model program. In addition, the aforementioned dependency graph is computed, and this language model program is then written to the store. After the invocation occurs, all of the input and output data associated with that version of the language model program is also stored in the database for later analysis. As the prompt engineering process continues, new versions of the language model programs are only added to the store if they are invoked at least once.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2"><span class="kn">from</span> <span class="nn">ell2a.stores.sql</span> <span class="kn">import</span> <span class="n">SQLiteStore</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="n">ell2a</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="s1">'./logdir'</span><span class="p">,</span> <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">)</span>
+</span><span id="line-7"><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-8"><span class="w">    </span><span class="sd">"""You are a friendly greeter."""</span>
+</span><span id="line-9">    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Generate a greeting for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">."</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="n">result</span> <span class="o">=</span> <span class="n">greet</span><span class="p">(</span><span class="s2">"Alice"</span><span class="p">)</span>
+</span><span id="line-12"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># Output: "Hello, Alice! It's wonderful to meet you."</span>
+</span></code></pre></div>
+</div>
+<p>After this execution, a row might be added to the <cite>SerializedLMP</cite> table:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">lmp_id: "1a2b3c4d5e6f7g8h"
+</span><span id="line-2">name: "greet"
+</span><span id="line-3">source: "@ell2a.simple(model=\"gpt-4o-mini\")\ndef greet(name: str):\n    \"\"\"You are a friendly greeter.\"\"\"\n    return f\"Generate a greeting for {name}.\""
+</span><span id="line-4">dependencies: ""
+</span><span id="line-5">created_at: "2023-07-15T10:30:00Z"
+</span><span id="line-6">lmp_type: "LM"
+</span><span id="line-7">api_params: {"model": "gpt-4o-mini"}
+</span><span id="line-8">initial_free_vars: {}
+</span><span id="line-9">initial_global_vars: {}
+</span><span id="line-10">num_invocations: 1
+</span><span id="line-11">commit_message: "Initial version of greet function"
+</span><span id="line-12">version_number: 1
+</span></code></pre></div>
+</div>
+<p>And a corresponding row in the <cite>Invocation</cite> table:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">id: "9i8u7y6t5r4e3w2q"
+</span><span id="line-2">lmp_id: "1a2b3c4d5e6f7g8h"
+</span><span id="line-3">latency_ms: 250.5
+</span><span id="line-4">prompt_tokens: 15
+</span><span id="line-5">completion_tokens: 10
+</span><span id="line-6">created_at: "2023-07-15T10:30:01Z"
+</span></code></pre></div>
+</div>
+<p>With its associated <cite>InvocationContents</cite>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">invocation_id: "9i8u7y6t5r4e3w2q"
+</span><span id="line-2">params: {"name": "Alice"}
+</span><span id="line-3">results: ["Hello, Alice! It's wonderful to meet you."]
+</span><span id="line-4">invocation_api_params: {"temperature": 1.0, "max_tokens": 50}
+</span></code></pre></div>
+</div>
+<p>This structure allows for efficient tracking and analysis of LMP usage and performance over time.</p>
+<section id="autocommitting">
+<h3>Autocommitting<a class="headerlink" href="#autocommitting" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#autocommitting'">¶</a></h3>
+<p>Because prompts are just their source code and versions and diffs between versions are automatically computed in the background, we can additionally automatically create human-readable commit messages between versions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">ell2a</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="s1">'./logdir'</span><span class="p">,</span> <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>By providing the autocommit=True argument to the initialization function for ell2a, every time a version is created that supersedes a previous version of a prompt (as collocated by their fully qualified name), ell2a will use GPT-4-mini to automatically generate a human-readable commit message that can then be viewed later to show effective changes across versions. This works both for the local automatic prompt versioning during prompt engineering to quickly locate an ideal prompt or previous prompt that was developed, and for archival prompt versioning in production when seeking out regressions or previously differently performing language model programs.</p>
+<a class="rounded-image invertible-image reference internal image-reference" href="../_images/auto_commit.png"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="../_images/auto_commit.png" style="width: 100%;"/></a>
+</section>
+</section>
+<section id="tracing">
+<h2>Tracing<a class="headerlink" href="#tracing" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#tracing'">¶</a></h2>
+<p>Central to the prompt engineering process is understanding not just how prompts change, but how they are used.</p>
+<p>Traditionally, without a dedicated prompt engineering framework, developers resort to manually storing inputs and outputs from language model API providers. This approach typically involves intercepting API calls and constructing custom database schemas for production applications. However, this method often proves cumbersome, lacking scalability across projects and necessitating frequent re-implementation.</p>
+<p>To address these challenges, solutions like Weave and LangChain/LangSmith have emerged, each offering distinct approaches:</p>
+<ol class="arabic simple">
+<li><p>Function-level tracing: This method captures inputs and outputs of arbitrary Python functions. While effective for monitoring production deployments, it falls short in tracking intra-version changes that often occur during local development and prompt engineering iterations.</p></li>
+<li><p>Framework-specific versioning: This approach, exemplified by LangChain, requires prompts to be versioned within a specific framework. Prompts are typically compressed into template strings or combinations of template strings and versioned Python code. While structured, this method can be restrictive and may not suit all development workflows.</p></li>
+</ol>
+<p>ell2a takes the best of both worlds by serializing arbitrary Python code. This allows us to track how language model programs are used through their inputs and outputs, organizing these uses by version for later comparison. Importantly, this is achieved without requiring users to do anything more than write normal Python code to produce their prompt strings for the language model API.</p>
+<section id="constructing-a-computation-graph">
+<h3>Constructing a computation graph<a class="headerlink" href="#constructing-a-computation-graph" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#constructing-a-computation-graph'">¶</a></h3>
+<p>When using the ell2a store, all inputs and outputs of language model programs are stored. But what about interactions between them?</p>
+<p>To track how language model programs interact during execution and construct a computation graph of data flow (similar to deep learning frameworks like PyTorch and TensorFlow), ell2a wraps the outputs of all language model programs with a tracing object.</p>
+<p>Tracing objects are wrappers around immutable base types in Python. They keep track of originating language model programs and other metadata, preserving this trace of origination across arbitrary operations. One of the most important tracing objects is the _lstr object.</p>
+<p>For example, consider the following language model program:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">ell2a</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o"</span><span class="p">)</span> <span class="c1"># version: ae8f32s664200e1</span>
+</span><span id="line-4"><span class="k">def</span> <span class="nf">hi</span><span class="p">():</span>
+</span><span id="line-5">    <span class="k">return</span> <span class="s2">"say hi"</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="n">x</span> <span class="o">=</span> <span class="n">hi</span><span class="p">()</span> <span class="c1"># invocation id: 4hdfjhe8ehf (version: ae8f32s664200e1)</span>
+</span></code></pre></div>
+</div>
+<p>While x in this example is functionally a string and behaves exactly like one, it is actually an _lstr:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span id="line-2"><span class="go">&lt;class 'ell2a.types._lstr.lstr'&gt;</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+</span><span id="line-5"><span class="go">'hi'</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__origin_trace__</span>
+</span><span id="line-8"><span class="go">{'4hdfjhe8ehf'}</span>
+</span></code></pre></div>
+</div>
+<p>Furthermore, continued manipulation of the string preserves its origin trace, as all original string operations are overridden to produce new immutable instances that contain or combine origin traces.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="line-2"><span class="go">'h'</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__origin_trace__</span>
+</span><span id="line-5"><span class="go">{'4hdfjhe8ehf'}</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="s2">" there"</span>
+</span><span id="line-8"><span class="go">'hi there'</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="s2">" there"</span><span class="p">)</span><span class="o">.</span><span class="n">__origin_trace__</span>
+</span><span id="line-11"><span class="go">{'4hdfjhe8ehf'}</span>
+</span></code></pre></div>
+</div>
+<p>Additionally, when two mutable objects are combined, the resulting trace is the union of the two traces.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">hi</span><span class="p">()</span> <span class="c1"># invocation id: 4hdfjhe8ehf</span>
+</span><span id="line-2"><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">hi</span><span class="p">()</span> <span class="c1"># invocation id: 345hef345h</span>
+</span><span id="line-3"><span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span id="line-4"><span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="o">.</span><span class="n">__origin_trace__</span>
+</span><span id="line-5"><span class="go">{'4hdfjhe8ehf', '345hef345h'}</span>
+</span></code></pre></div>
+</div>
+<p>By tracking both inputs and outputs of language model programs, we can use these origin traces to construct a computation graph. This graph illustrates how language model programs interact during execution.</p>
+<p>This capability allows you to easily track the flow of language model outputs, identify weak points in prompt chains, understand unintended mutations in inputs and outputs of prompts as they are executed, and more generally, create a path for future symbolic and discrete optimization techniques applied to language model programs.</p>
+<a class="rounded-image invertible-image reference internal image-reference" href="../_images/invocations.webp"><img alt="ell2a demonstration" class="rounded-image invertible-image" src="../_images/invocations.webp" style="width: 100%;"/></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-2024-08-06"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span id="line-2"><span class="k">def</span> <span class="nf">create_personality</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-3"><span class="w">    </span><span class="sd">"""You are backstoryGPT. You come up with a backstory for a character incljuding name. Choose a completely random name from the list. Format as follows.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">Name: &lt;name&gt;</span>
+</span><span id="line-6"><span class="sd">Backstory: &lt;3 sentence backstory&gt;'"""</span> <span class="c1"># System prompt</span>
+</span><span id="line-7">
+</span><span id="line-8">    <span class="k">return</span> <span class="s2">"Come up with a backstory about "</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">names_list</span><span class="p">)</span> <span class="c1"># User prompt</span>
+</span><span id="line-9">
+</span><span id="line-10">
+</span><span id="line-11"><span class="k">def</span> <span class="nf">format_message_history</span><span class="p">(</span><span class="n">message_history</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="line-12">    <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">message_history</span><span class="p">])</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="nd">@ell2a</span><span class="o">.</span><span class="n">simple</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-2024-08-06"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span><span id="line-15"><span class="k">def</span> <span class="nf">chat</span><span class="p">(</span><span class="n">message_history</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="o">*</span><span class="p">,</span> <span class="n">personality</span> <span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-16">
+</span><span id="line-17">        <span class="k">return</span> <span class="p">[</span>
+</span><span id="line-18">            <span class="n">ell2a</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">"""Here is your description.</span>
+</span><span id="line-19"><span class="si">{</span><span class="n">personality</span><span class="si">}</span><span class="s2">.</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="s2">Your goal is to come up with a response to a chat. Only respond in one sentence (should be like a text message in informality.) Never use Emojis."""</span><span class="p">),</span>
+</span><span id="line-22">            <span class="n">ell2a</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="n">format_message_history</span><span class="p">(</span><span class="n">message_history</span><span class="p">)),</span>
+</span><span id="line-23">        <span class="p">]</span>
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, origin tracing in ell2a works only on string primitives. We’re actively developing support for arbitrary object tracking, which will be available in a future release. This enhancement will allow for more comprehensive tracing of various data types throughout your language model programs.</p>
+</div>
+<hr class="docutils"/>
+<p>In the next chapter, we will explore how to visualize versioning and tracing data using ell2a studio. This powerful agent provides a comprehensive interface for analyzing and understanding the complex interactions within your language model programs.</p>
+</section>
+</section>
+</section>
+</div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
+<div class="mr-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="ell2a_simple.html">
+<svg class="mr-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="15 18 9 12 15 6"></polyline>
+</svg>
+        @ell2a.simple
+      </a>
+</div>
+<div class="ml-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="ell2a_studio.html">
+        Studio
+        <svg class="ml-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</a>
+</div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#checkpointing-prompts'" class="reference internal" href="#checkpointing-prompts">Checkpointing prompts</a><ul>
+<li><a :data-current="activeSection === '#serializing-prompts-via-lexical-closures'" class="reference internal" href="#serializing-prompts-via-lexical-closures">Serializing prompts via lexical closures</a></li>
+<li><a :data-current="activeSection === '#constructing-a-dependency-graph'" class="reference internal" href="#constructing-a-dependency-graph">Constructing a dependency graph</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#versioning'" class="reference internal" href="#versioning">Versioning</a><ul>
+<li><a :data-current="activeSection === '#autocommitting'" class="reference internal" href="#autocommitting">Autocommitting</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#tracing'" class="reference internal" href="#tracing">Tracing</a><ul>
+<li><a :data-current="activeSection === '#constructing-a-computation-graph'" class="reference internal" href="#constructing-a-computation-graph">Constructing a computation graph</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, Xingqiang Chen Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 7.2.6</a></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../_static/doctools.js?v=888ff710"></script>
+<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script defer="defer" src="../_static/theme.js?v=e82a16a3"></script>
+</body>
+</html>

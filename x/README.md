@@ -1,1 +1,0 @@
-This folder contains experimental clients for various LLM providers that may at some point be integrated into ell2a.
